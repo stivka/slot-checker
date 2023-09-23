@@ -6,8 +6,12 @@ ENV GRADLE_HOME=/opt/gradle
 ENV GRADLE_USER_HOME=/gradle
 ENV PATH=$PATH:$GRADLE_HOME/bin
 
-# Install Gradle 8.2.1
-RUN mkdir /opt/gradle && \
+# Install necessary utilities
+RUN apt-get update && apt-get install -y curl unzip
+
+# Echo what's being done for better debugging
+RUN echo "Setting up Gradle..." && \
+    mkdir /opt/gradle && \
     curl -L -o gradle-8.2.1-bin.zip https://services.gradle.org/distributions/gradle-8.2.1-bin.zip && \
     unzip gradle-8.2.1-bin.zip -d /opt/gradle && \
     ln -s /opt/gradle/gradle-8.2.1 /opt/gradle/latest && \
