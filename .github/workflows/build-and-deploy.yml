@@ -19,8 +19,8 @@ jobs:
     - name: Push Docker image (optional)
       run: |
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker tag slot-checker:latest your_dockerhub_username/slot-checker:latest
-        docker push your_dockerhub_username/slot-checker:latest
+        docker tag slot-checker:latest stivka/slot-checker:latest
+        docker push stivka/slot-checker:latest
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
