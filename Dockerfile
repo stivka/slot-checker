@@ -1,5 +1,5 @@
-# Using a JDK 17 base image for building
-FROM openjdk:17 AS build
+# This jdk is based on Debian 10 (buster) and should have the necessary utilities like apt-get, curl and zip
+FROM openjdk:17-jdk-buster AS build
 
 # Set up environment variables for Gradle
 ENV GRADLE_HOME=/opt/gradle
