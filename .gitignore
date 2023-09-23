@@ -6,6 +6,8 @@ logs/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+docker-compose.yml
+
 ### STS ###
 .apt_generated
 .classpath

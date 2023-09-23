@@ -13,6 +13,6 @@ public class DailyTaskRunner {
     @Scheduled(cron = "0 0 12 * * ?", zone="Europe/Tallinn")
     public void runDailyTask() {
         slotChecker.checkForNewSlots();
-        System.out.println("Running daily task! " + System.currentTimeMillis());
+        System.out.println("Running daily scheduled task! " + System.currentTimeMillis());
     }
 }

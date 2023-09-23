@@ -34,6 +34,8 @@ public class SlotChecker {
     @PostConstruct
     public void checkForNewSlots() {
 
+        System.out.println("Running checkForNewSlots! " + System.currentTimeMillis());
+
         try {
             // this is the separate executable between Selenium and the Chrome browser
             System.setProperty("webdriver.chrome.driver", chromeDriverPath);
