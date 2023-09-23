@@ -17,6 +17,10 @@ RUN echo "Setting up Gradle..." && \
     ln -s /opt/gradle/gradle-8.2.1 /opt/gradle/latest && \
     rm gradle-8.2.1-bin.zip
 
+# Update PATH to include Gradle and make it executable
+ENV PATH=$PATH:/opt/gradle/latest/bin
+RUN chmod +x /opt/gradle/latest/bin/gradle
+
 # Set the working directory in the container
 WORKDIR /app
 
