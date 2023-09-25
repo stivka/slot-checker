@@ -16,22 +16,29 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import jakarta.annotation.PostConstruct;
 
 @Service
 public class SlotChecker {
 
+    @Autowired
+    private Environment env;
+
     private static final File SLOTS_HASH_FILE = new File("previousSlotsHash.txt");
 
-    @Value("${URL}")
     private String url;
-
-    @Value("${CHROME_DRIVER_PATH}")
-    private String chromeDriverPath;
+    private String chromeDriverPath = "/app/chromedriver-linux64/chromedriver";
+    private String chromePath = "/app/chrome-linux64/chrome";
 
     @PostConstruct
+    public void init() {
+        url = env.getProperty("URL");
+        checkForNewSlots();
+    }
+
     public void checkForNewSlots() {
 
         System.out.println("Running checkForNewSlots! " + System.currentTimeMillis());
@@ -42,10 +49,11 @@ public class SlotChecker {
             System.setProperty("webdriver.chrome.logfile", "./logs/chromedriver.log");
 
             ChromeOptions options = new ChromeOptions();
-            // for an ideal match, supply the chrome version that goes with the chromedriver
-            // options.setBinary("C:/Program Files/chrome-win64/chrome.exe");
+            options.setBinary(chromePath);
+            options.addArguments("--headless", "--disable-gpu", "--no-sandbox", "--disable-dev-shm-usage");
             WebDriver driver = new ChromeDriver(options);
 
+            // consider adding retries
             driver.get(url);
 
             // Assuming there's only one iframe; if there are multiple iframes, you may need
