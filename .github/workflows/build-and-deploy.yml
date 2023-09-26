@@ -1,10 +1,14 @@
+# GitHub Actions CI/CD pipeline script for automating the build and deployment process
+# for a Dockerized application
 name: Build and Deploy
 
+# the trigger, whenever changes are pushed
 on:
   push:
     branches:
       - master
 
+# GitHub Actions porvides a runner (essentially a VM) on which the jobs are executed on
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,14 +17,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Build Docker image
-      run: docker build -t slot-checker .
+# Follow the script from ./docker-compose.yml
+    - name: Build Docker images using docker-compose
+      run: docker-compose build
 
-    - name: Push Docker image (optional)
+# Upload the images to DockerHub
+    - name: Push Docker images
       run: |
         echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        docker tag slot-checker:latest stivka/slot-checker:latest
-        docker push stivka/slot-checker:latest
+        docker-compose push
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}

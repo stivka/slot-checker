@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Include Spring Boot's default logging setup -->
+    <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- Daily log file name -->
+        <file>./logs/%d{yyyy-MM-dd}.log</file>
+
+        <!-- Define the rolling policy. Here we'll create a new log file every day -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover with a history of 30 days -->
+            <fileNamePattern>./logs/%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Remember to set log levels granularly, that is keep the root level high like INFO
+         and specific loggers low like DEBUG whose behaviour you are surveying. 
+         This way the logs don't get too noisy -->
+    <logger name="org.springframework.web" level="DEBUG" />
+
+    <!-- Make sure the root logger uses the console and file appenders -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

@@ -1,0 +1,12 @@
+FROM alpine:latest
+
+# Install webhook and other utilities
+RUN apk add --no-cache webhook curl
+
+WORKDIR /webhooks
+
+# Copy your webhook configuration and script
+COPY hooks.json .
+COPY deploy.sh .
+
+CMD ["webhook", "-hooks", "/webhooks/hooks.json", "-verbose"]

@@ -4,6 +4,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class PushbulletNotifier {
 
     private static final String PUSHBULLET_API_URL = "https://api.pushbullet.com/v2/pushes";
